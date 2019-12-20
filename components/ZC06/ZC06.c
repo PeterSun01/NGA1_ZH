@@ -74,15 +74,15 @@ void ZC06_Read_Task(void* arg)
     uint8_t data_u1[BUF_SIZE];
     while(1)
     {
-        int len1 = uart_read_bytes(UART_NUM_1, data_u1, BUF_SIZE, 20 / portTICK_RATE_MS);
+        int len1 = uart_read_bytes(UART_NUM_1, data_u1, BUF_SIZE, 10 / portTICK_RATE_MS);
         if(len1!=0)  //读取到传感器数据
         {
-            // printf("zc05=");
-            // for(int i=0;i<len1;i++)
-            // {
-            //     printf("0x%x ",data_u1[i]);
-            // }
-            // printf("\r\n");      
+            printf("zc05=");
+            for(int i=0;i<len1;i++)
+            {
+                printf("0x%x ",data_u1[i]);
+            }
+            printf("\r\n");      
             
             if(FucCheckSum(data_u1,len1)==data_u1[len1-1])//校验成功
             {
@@ -112,7 +112,7 @@ void ZC06_Read_Task(void* arg)
             len1=0;
             bzero(data_u1,sizeof(data_u1));                 
         } 
-        vTaskDelay(500 / portTICK_RATE_MS);
+        vTaskDelay(300 / portTICK_RATE_MS);
     }   
 }
 
